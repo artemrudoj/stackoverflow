@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{%  block content %}
+<div class="col-sm-6">
+    <h1>{{ question.title }}</h1>
+    <p>{{ question.text }}</p>
+    <p>Reporter: {{ question.data }}</p>
+
+    {% for answer in question.answers.all %}
+        <div class="panel panel-default">
+          <div class="panel-heading">{{ answer.user }}</div>
+          <div class="panel-body">{{ answer.text }}</div>
+        </div>
+    {%  endfor %}
+</div>
+{%  endblock %}

@@ -9,6 +9,7 @@ class QuestionsListView(ListView):
 
     queryset = Question.objects.all()
     template_name = "questions.html"
+    paginate_by = 1
 
     def get_context_data(self, **kwargs):
         context = super(QuestionsListView, self).get_context_data(**kwargs)
@@ -18,7 +19,7 @@ class QuestionsListView(ListView):
 
 
 class QuestionView(DetailView):
-    template_name = ''
+    template_name = 'question.html'
     queryset = Question.objects.all()
 
     def get_context_data(self, **kwargs):

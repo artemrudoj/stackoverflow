@@ -16,9 +16,11 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 
-from question.views import QuestionsListView
+from question.views import QuestionsListView, QuestionView
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^questions/', QuestionsListView.as_view(), name='question-list'),
+    url(r'^questions/$', QuestionsListView.as_view(), name='question-list'),
+    url(r'^questions/(?P<pk>\d+)/$', QuestionView.as_view(), name='question'),
+    url('^', include('django.contrib.auth.urls')),
 ]

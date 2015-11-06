@@ -1,6 +1,69 @@
 {% extends 'base.html' %}
-{% for question in object_list%}
-   <div> {{ question.title }}</div>
-    <div>{{ question.text }}</div>
-    <div>{{ question.rate }}</div>
-{%  endfor %}
+
+{%  block content %}
+    <div class="col-sm-6">
+        {% for question in object_list%}
+         <div class="row">
+              <div class="col-xs-12">
+                <h2>{{ question.title }}</h2>
+                <p>{{ question.text }}</p>
+                <a href="/questions/{{ question.id }}/"><p class="lead"><button class="btn btn-default">Read More</button></p></a>
+                  {% for tag in question.tags.all %}
+                      <p class="pull-right">
+                       <a href="#"> <span class="label label-default">{{ tag }}</a></span>
+                      </p>
+                  {%  endfor %}
+                <ul class="list-inline">
+                    <li>Date:{{ question.data }}</li>
+                    <li><a href="#"><i class="glyphicon glyphicon-comment"></i>{{question.answers.all|length}}</a></li>
+                    <li><div class="checkbox">
+                            <label><input type="checkbox"> Remember me</label>
+                        </div>
+                    </li>
+                </ul>
+              </div>
+         </div>
+        <hr>
+        {%  endfor %}
+        {% if is_paginated %}
+
+            <nav>
+  <ul class="pagination">
+    <li>
+        {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        {% endif %}
+    </li>
+  {% load question_filters %}
+  {% for page in paginator.num_pages|times  %}
+    <li><a href="#">{{ page }}</a></li>
+  {% endfor %}
+    <li>
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        {% endif %}
+    </li>
+  </ul>
+</nav>
+            <div class="pagination">
+                <span class="step-links">
+                    {% if page_obj.has_previous %}
+                        <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                    {% endif %}
+
+                    <span class="current">
+                        Page {{ page_obj.number }} of {{ paginator.num_pages }}.
+                    </span>
+
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}">next</a>
+                    {% endif %}
+                </span>
+            </div>
+        {% endif %}
+    </div>
+{%  endblock %}
