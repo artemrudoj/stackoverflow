@@ -25,7 +25,15 @@
 	</div>
 	<div class="collapse navbar-collapse">
 		<ul class="nav navbar-nav">
-			<li><a href="#">Link</a></li>
+			<li>
+                {% if user.is_authenticated %}
+                <li><a href="/">Hi, {{request.user.username}}</a></li>
+                <li><a href="/logout/">LogOut</a></li>
+                {%else%}
+                <li><a href="/login/">Log in</a></li>
+                <li><a href="/registration/">Register</a></li>
+            {%endif%}
+            </li>
 			<li><a href="#">Link</a></li>
 			<li><a href="#">Link</a></li>
 			<li class="dropdown">
@@ -85,9 +93,10 @@
   </div><!--/left-->
   
   <!--center-->
-
-    {%  block content %}
-    {%  endblock %}
+    <div class="col-sm-6">
+        {%  block content %}
+        {%  endblock %}
+    </div>
   <!--/center-->
 
   <!--right-->

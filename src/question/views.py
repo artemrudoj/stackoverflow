@@ -1,4 +1,4 @@
-from django.views.generic import DetailView
+from django.views.generic import DetailView, TemplateView
 from .models import Question
 from django.views.generic.list import ListView
 from django.utils import timezone
@@ -26,4 +26,5 @@ class QuestionView(DetailView):
         context = super(QuestionView, self).get_context_data()
         return context
 
-
+class QuestionAdd(TemplateView):
+    template_name = "question_add.html"

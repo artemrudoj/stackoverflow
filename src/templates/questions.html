@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 
 {%  block content %}
-    <div class="col-sm-6">
         {% for question in object_list%}
          <div class="row">
               <div class="col-xs-12">
@@ -22,7 +21,6 @@
                     </li>
                 </ul>
               </div>
-         </div>
         <hr>
         {%  endfor %}
         {% if is_paginated %}

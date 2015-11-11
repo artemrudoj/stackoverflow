@@ -15,12 +15,17 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
+from django.contrib.auth.decorators import login_required
 
-from question.views import QuestionsListView, QuestionView
+from question.views import QuestionsListView, QuestionView, QuestionAdd
+from users.views import LoginRequest,  MyUserRegistration, LogoutRequest
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^questions/$', QuestionsListView.as_view(), name='question-list'),
     url(r'^questions/(?P<pk>\d+)/$', QuestionView.as_view(), name='question'),
-    url('^', include('django.contrib.auth.urls')),
+    url(r'^login/', LoginRequest, name='login'),
+    url(r'^registration/', MyUserRegistration, name='registration'),
+    url(r'^logout/', LogoutRequest, name='logout'),
+    url(r'^question_add/', QuestionAdd.as_view(), name='question_add'),
 ]

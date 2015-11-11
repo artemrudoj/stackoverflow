@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {%  block content %}
-<div class="col-sm-6">
+
     <h1>{{ question.title }}</h1>
     <p>{{ question.text }}</p>
     <p>Reporter: {{ question.data }}</p>
@@ -12,5 +12,5 @@
           <div class="panel-body">{{ answer.text }}</div>
         </div>
     {%  endfor %}
-</div>
+
 {%  endblock %}
