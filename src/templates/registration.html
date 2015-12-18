@@ -4,27 +4,27 @@
                     {% csrf_token %}
                     <h2 class="form-signin-heading">Registration</h2>
                     {% if form.errors %}
-                    <div class="alert alert-danger">
-                        Sory, this email adderss allready registered!
-                    </div>
+                        <div class="alert alert-danger">
+                           {{ form.errors }}
+                        </div>
                     {% endif %}
                     <div class="form-group">
                         {% if form.username.errors %}<p class="error">{{ form.username.errors }}</p>{% endif %}
-                        <label class="col-sm-2 control-label">Login</label>
+                        <label class="col-sm-2 control-label">Username:</label>
                         <div class="col-sm-5">
                             {{ form.username }}
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">Email address</label>
+                        <label class="col-sm-2 control-label">Email:</label>
                         <div class="col-sm-5">
                             {{ form.email }}
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">NickName</label>
+                        <label class="col-sm-2 control-label">First name:</label>
                         <div class="col-sm-5">
-                            {{ form.nickName }}
+                            {{ form.first_name }}
                         </div>
                     </div>
                     <div class="form-group">
@@ -36,7 +36,7 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Retype Password</label>
                         <div class="col-sm-5">
-                            {{ form.password1 }}
+                            {{ form.repeatedPassword }}
                         </div>
                     </div>
                     <div class="form-group">

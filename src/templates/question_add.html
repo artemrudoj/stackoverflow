@@ -1,32 +1,31 @@
 {% extends "base.html" %}
 {% block content %}
-                <form class="form-horizontal">
+                <form action="{% url 'question_add'%}" class="form-horizontal" method="post">
+                    {% csrf_token %}
                     <h2 class="form-signin-heading">New question</h2>
-                    <div class="alert alert-danger">
-                        Sorry, enter your question please!
-                    </div>
+
                     <div class="form-group">
+                        {% for error in form.errors %}
+                            <span class="alert alert-error">{{ error }}</span>
+                        {% endfor %}
                         <label for="exampleInputTitle1" class="col-sm-2 control-label">Title</label>
                         <div class="col-sm-5">
-                            <input type="title" class="form-control" id="exampleInputTitle1" placeholder="Title">
+                            <input type="title" class="form-control" id="exampleInputTitle1" placeholder="Title" name="title">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label" for="exampleInputText1">Description</label>
                         <div class="col-sm-5">
-                            <textarea class="form-control" rows="5" id="exampleInputText1" placeholder="Text"></textarea>
+                            <textarea class="form-control" name="description" rows="7" id="exampleInputText1" placeholder="Text"></textarea>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputTags1" class="col-sm-2 control-label">Tags</label>
                         <div class="col-sm-5">
-                            <input type="tags" class="form-control" id="exampleInputTags1" placeholder="Tags">
+                            <input type="tags" name="tags" class="form-control" id="exampleInputTags1" placeholder="Tags">
                         </div>
                     </div>
-                    <div class="form-group">
-                        <div class="col-sm-2">
-                            <button class="btn btn-lg btn-primary " type="submit">Ask!</button>
-                        </div>
-                    </div>
+                    <input class="btn btn-lg btn-primary " type="submit" value="Ask!">
+
                 </form>
 {% endblock %}

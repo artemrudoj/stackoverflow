@@ -1,16 +1,47 @@
 {% extends 'base.html' %}
 
 {%  block content %}
-
-    <h1>{{ question.title }}</h1>
-    <p>{{ question.text }}</p>
-    <p>Reporter: {{ question.data }}</p>
-
+    <div class="panel panel-info">
+        <div class="panel-heading"><h1>{{ question.title }}</h1></div>
+        <div class="panel-body">
+            <p>{{ question.text }}</p>
+            <p>Reporter: {{ question.data }}</p>
+        </div>
+    </div>
     {% for answer in question.answers.all %}
         <div class="panel panel-default">
-          <div class="panel-heading">{{ answer.user }}</div>
+          <input type="checkbox">
+          <div class="panel-heading">{{ answer.author }}</div>
           <div class="panel-body">{{ answer.text }}</div>
         </div>
     {%  endfor %}
+    {% if user.is_authenticated %}
+          <form action="{% url 'comment_add' %}" class="form-horizontal" method="post">
+            {% csrf_token %}
+                <div class="col-sm-12">
+                    <textarea class="form-control" name="description" rows="7" id="exampleInputText1" placeholder="comment"></textarea>
+                </div>
+              <input type="hidden" name="title" value="{{ question.id }}">
+            <input class="btn btn-lg btn-primary " type="submit" value="answer">
+          </form>
+    {%endif%}
 
+          <script>
+                    function like(id){
+                          $.ajax({
+                                   type: "POST",
+                                   url: "{% url 'like' %}",
+                                   data: {'id': id, 'type': "question", 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                                   dataType: "json",
+                                   success: function(response) {
+                                          alert(response.message);
+                                          alert('Company likes count is now ' + response.likes_count);
+                                          window.location.reload(true);
+                                   },
+                                    error: function(rs, e) {
+                                           alert(rs.responseText);
+                                    }
+                              });
+                        }
+                    </script>
 {%  endblock %}

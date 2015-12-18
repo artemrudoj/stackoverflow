@@ -28,6 +28,9 @@ SECRET_KEY = 's@xpqysrf2$a%c)j*=z*%++j*u#9mel)3%yr%1(8+po@=nl&@z'
 DEBUG = True
 
 ALLOWED_HOSTS = []
+EMAIL_HOST = "smtp.sendgrid.net"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
 
 
 # Application definition
@@ -51,7 +54,6 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.security.SecurityMiddleware',
 )
 
 ROOT_URLCONF = 'application.urls'
@@ -72,7 +74,7 @@ TEMPLATES = [
     },
 ]
 
-
+AUTH_USER_MODEL = 'users.MyUser'
 
 WSGI_APPLICATION = 'application.wsgi.application'
 

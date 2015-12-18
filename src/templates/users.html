@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{%  block content %}
+    {% for user in object_list%}
+
+          <div class="col-xs-12">
+            <h2>{{ user.username }}</h2>
+            <a href="/users/{{ user.id }}/"><p class="lead"><button class="btn btn-default">Read More</button></p></a>
+              <hr>
+          </div>
+    {%  endfor %}
+
+    {% if is_paginated %}
+        <nav>
+          <ul class="pagination">
+            <li>
+                {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                {% endif %}
+            </li>
+          {% load question_filters %}
+              {% for page in paginator.num_pages|times  %}
+                <li><a href="?page={{ page }}">{{ page }}</a></li>
+          {% endfor %}
+            <li>
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                {% endif %}
+            </li>
+          </ul>
+        </nav>
+    {% endif %}
+
+{%  endblock %}

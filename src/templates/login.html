@@ -2,10 +2,12 @@
 {% block content %}
                 <form class="form-horizontal" action="" method="post">
                     {% csrf_token %}
-                    <h2 class="form-signin-heading">Log In</h2>
-                    <div class="alert alert-danger">
-                        Sory, wrong password!
-                    </div>
+                    <h2 class="form-signin-heading">Вход</h2>
+                         {% if form.errors %}
+                             <div class="alert alert-danger">
+                                 {{ form.errors }}
+                             </div>
+                    {% endif %}
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Login</label>
                         <div class="col-sm-5">

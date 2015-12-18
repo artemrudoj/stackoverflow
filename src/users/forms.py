@@ -1,20 +1,20 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.forms import ModelForm
-from users.models import MyUser
-from django.contrib.auth import authenticate, login, logout
+from .models import MyUser
+
 
 class RegistrationForm(ModelForm):
     username = forms.CharField( label=(u'User name'))
-    username.widget.attrs.update( {'type' : "login", 'class':"form-control", 'placeholder':"Login"})
+    username.widget.attrs.update( {'type' : "login", 'class':"form-control", 'placeholder':"username"})
     email = forms.EmailField( label=(u'Email Address'),)
-    email.widget.attrs.update( {'type' : "email", 'class':"form-control", 'placeholder':"Email"})
-    nickName = forms.CharField( label=(u'Nickname'),)
-    nickName.widget.attrs.update( {'type' : "NickName", 'class':"form-control",  'placeholder':"NickName"})
+    email.widget.attrs.update( {'type' : "email", 'class':"form-control", 'placeholder':"email"})
+    first_name = forms.CharField( label=(u'Nickname'),)
+    first_name.widget.attrs.update( {'type' : "NickName", 'class':"form-control",  'placeholder':"first_name"})
     password = forms.CharField( label=(u'Password'), widget=forms.PasswordInput(render_value=False))
-    password.widget.attrs.update( {'type' : "Password", 'class':"form-control",  'placeholder':"Password"})
-    password1 = forms.CharField( label=(u'Verify Passwore'), widget=forms.PasswordInput(render_value=False))
-    password1.widget.attrs.update( {'type' : "Retype password", 'class':"form-control", 'placeholder':"Retype password"})
+    password.widget.attrs.update( {'type' : "Password", 'class':"form-control",  'placeholder':"password"})
+    repeatedPassword = forms.CharField( label=(u'Verify Password'), widget=forms.PasswordInput(render_value=False))
+    repeatedPassword.widget.attrs.update( {'type' : "Retype password", 'class':"form-control", 'placeholder':"Repeated password"})
 
     class Meta:
         model = MyUser

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Question
+from .models import Question, Rates
 from .models import Tag
 from .models import Answer
 
@@ -12,5 +12,9 @@ class QuestionAdmin(admin.ModelAdmin):
     pass
 
 @admin.register(Answer)
+class QuestionAdmin(admin.ModelAdmin):
+    pass
+
+@admin.register(Rates)
 class QuestionAdmin(admin.ModelAdmin):
     pass

@@ -1,67 +1,75 @@
 {% extends 'base.html' %}
 
 {%  block content %}
-        {% for question in object_list%}
-         <div class="row">
-              <div class="col-xs-12">
-                <h2>{{ question.title }}</h2>
-                <p>{{ question.text }}</p>
-                <a href="/questions/{{ question.id }}/"><p class="lead"><button class="btn btn-default">Read More</button></p></a>
-                  {% for tag in question.tags.all %}
-                      <p class="pull-right">
-                       <a href="#"> <span class="label label-default">{{ tag }}</a></span>
-                      </p>
-                  {%  endfor %}
-                <ul class="list-inline">
-                    <li>Date:{{ question.data }}</li>
-                    <li><a href="#"><i class="glyphicon glyphicon-comment"></i>{{question.answers.all|length}}</a></li>
-                    <li><div class="checkbox">
-                            <label><input type="checkbox"> Remember me</label>
-                        </div>
-                    </li>
-                </ul>
-              </div>
-        <hr>
-        {%  endfor %}
-        {% if is_paginated %}
 
-            <nav>
-  <ul class="pagination">
-    <li>
-        {% if page_obj.has_previous %}
-            <a href="?page={{ page_obj.previous_page_number }}">
-                <span aria-hidden="true">&laquo;</span>
-            </a>
-        {% endif %}
-    </li>
-  {% load question_filters %}
-  {% for page in paginator.num_pages|times  %}
-    <li><a href="#">{{ page }}</a></li>
-  {% endfor %}
-    <li>
-        {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}">
-                <span aria-hidden="true">&raquo;</span>
-            </a>
-        {% endif %}
-    </li>
-  </ul>
-</nav>
-            <div class="pagination">
-                <span class="step-links">
-                    {% if page_obj.has_previous %}
-                        <a href="?page={{ page_obj.previous_page_number }}">previous</a>
-                    {% endif %}
+    {% for question in object_list%}
 
-                    <span class="current">
-                        Page {{ page_obj.number }} of {{ paginator.num_pages }}.
-                    </span>
+          <div class="col-xs-12">
+            <h2>{{ question.title }}</h2>
+            <ul class="list-inline">
+                <li><h1>{{ question.rate.count }}</h1></li>
+                <li><input type="button" id="like" onclick="like({{ question.id }}, 'question')" name="{{ question.id }}" value="Like" /></li>
 
-                    {% if page_obj.has_next %}
-                        <a href="?page={{ page_obj.next_page_number }}">next</a>
-                    {% endif %}
-                </span>
-            </div>
-        {% endif %}
-    </div>
+
+
+                 <li><a href="/questions/{{ question.id }}/"><p class="lead-right"><button class="btn btn-default " >Read More</button></p></a></li>
+            </ul>
+
+              {% for tag in question.tags.all %}
+                  <p class="pull-right">
+                   <a href="?sort={{ tag }}"> <span class="label label-default"> {{ tag }}</a></span>
+                  </p>
+              {%  endfor %}
+
+            <ul class="list-inline">
+                <li>asked by <a href="/questions/{{ question.id }}/">{{ question.author }}</a></li>
+                <li>{{ question.data }}</li>
+                <li><a href="#"><i class="glyphicon glyphicon-comment"></i> {{question.answers.all|length}}</a></li>
+            </ul>
+           <hr>
+          </div>
+    {%  endfor %}
+
+    {% if is_paginated %}
+        <nav>
+          <ul class="pagination">
+            <li>
+                {% if page_obj.has_previous %}
+                    <a href="?{{ input }}page={{ page_obj.previous_page_number }}">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                {% endif %}
+            </li>
+          {% load question_filters %}
+              {% for page in paginator.num_pages|times  %}
+                <li><a href="?{{ input }}page={{ page }}">{{ page }}</a></li>
+          {% endfor %}
+            <li>
+                {% if page_obj.has_next %}
+                    <a href="?{{ input }}page={{ page_obj.next_page_number }}">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                {% endif %}
+            </li>
+          </ul>
+        </nav>
+    {% endif %}
+      <script>
+                    function like(id, type){
+                          $.ajax({
+                                   type: "POST",
+                                   url: "{% url 'like' %}",
+                                   data: {'id': id, 'type': type, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                                   dataType: "json",
+                                   success: function(response) {
+                                          alert(response.message);
+                                          alert('Company likes count is now ' + response.likes_count);
+                                          window.location.reload(true);
+                                   },
+                                    error: function(rs, e) {
+                                           alert(rs.responseText);
+                                    }
+                              });
+                        }
+                    </script>
 {%  endblock %}

@@ -27,20 +27,21 @@
 		<ul class="nav navbar-nav">
 			<li>
                 {% if user.is_authenticated %}
-                <li><a href="/">Hi, {{request.user.username}}</a></li>
-                <li><a href="/logout/">LogOut</a></li>
+                    <li><a href="{% url 'user' request.user.id %}">{{request.user.username}}</a></li>
+                    <li><a href="{% url 'logout' %}">log out</a></li>
                 {%else%}
-                <li><a href="/login/">Log in</a></li>
-                <li><a href="/registration/">Register</a></li>
+                <li><a href="{% url 'login' %}">log in</a></li>
+                <li><a href="{% url 'registration' %}">registration</a></li>
             {%endif%}
             </li>
-			<li><a href="#">Link</a></li>
-			<li><a href="#">Link</a></li>
+			<li><a href="{% url 'users-list' %}">users</a></li>
+			<li><a href="{% url 'question-list' %}">questions</a></li>
 			<li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">menu <b class="caret"></b></a>
               <ul class="dropdown-menu">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
+                <li><a href="{% url 'question_add' %}"><span class="glyphicon glyphicon-plus" aria-hidden="true" style="color:green;"> ask question</span></a></li>
+                <li><a href="{% url 'populartags' %}">popular tags</a></li>
+                  <li><a href="{% url 'popularusers' %}">popular users</a></li>
                 <li class="divider"></li>
                 <li><a href="#">Separated link</a></li>
                 <li class="divider"></li>
@@ -67,7 +68,7 @@
   <div class="col-sm-3">
         <h2>Side</h2>
     	<div class="panel panel-default">
-         	<div class="panel-heading">Title</div>
+         	<div class="panel-heading">Popular tegs</div>
          	<div class="panel-body">Sed ac orci quis tortor imperdiet venenatis. Duis elementum auctor accumsan. 
             Aliquam in felis sit amet augue.</div>
         </div>
